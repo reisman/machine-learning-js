@@ -1,5 +1,5 @@
 import * as tf from '@tensorflow/tfjs';
-import { generateData } from './data';
+import { calculate, generateData } from './data';
 import plotDataAndPredictions from './ui';
 
 const a = tf.variable(tf.scalar(Math.random()));
@@ -9,10 +9,7 @@ const d = tf.variable(tf.scalar(Math.random()));
 
 const predict = xs => {
     return tf.tidy(() => {
-        return a.mul(xs.pow(tf.scalar(3)))
-            .add(b.mul(xs.square()))
-            .add(c.mul(xs))
-            .add(d);
+        return calculate([a, b, c, d], xs);
     });
 };
 
