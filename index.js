@@ -7,9 +7,9 @@ const b = tf.variable(tf.scalar(Math.random()));
 const c = tf.variable(tf.scalar(Math.random()));
 const d = tf.variable(tf.scalar(Math.random()));
 
-const predict = xs => {
+const predict = (xs, vars) => {
     return tf.tidy(() => {
-        return calculate([a, b, c, d], xs);
+        return calculate(vars, xs);
     });
 };
 
@@ -17,30 +17,27 @@ const loss = (preds, ys) => {
     return preds.sub(ys).square().mean();
 }
 
-const train = (xs, ys, epochs, learningRate) => {
+const train = (xs, ys, vars, epochs = 100, learningRate = 0.5) => {
     const optimizer = tf.train.sgd(learningRate);
-
     for (let i = 0; i < epochs; i++) {
         optimizer.minimize(() => {
-            const pred = predict(xs);
+            const pred = predict(xs, vars);
             return loss(pred, ys);
         });
 
-        console.log(`Epoch ${i+1}: a=${a.dataSync()[0]} || b=${b.dataSync()[0]} || c=${c.dataSync()[0]} || d=${d.dataSync()[0]}`);
+        const variablesLog = vars.map((v, i) => `V${i}=${v.dataSync()[0]}`).join(' || ');
+        console.log(`Epoch ${i+1}: ${variablesLog}`);
     }
 }
 
-document.getElementById('train').addEventListener('click', () => {
-    const realCoeffs = {
-        a: -0.8,
-        b: 0.3,
-        c: 0.5,
-        d: 0.8
-    };
-
+const trainAndPlot = container => {
+    const realCoeffs = [-0.8, 0.3, 0.5, 0.8];
     const {xs, ys} = generateData(500, realCoeffs);
-    const epochs = 100;
-    const learningRate = 0.5;
-    train(xs, ys, epochs, learningRate);
-    plotDataAndPredictions(document.getElementById('container'), xs, ys, predict(xs));
+    const vars = Array.from({length: realCoeffs.length}, () => tf.variable(tf.scalar(Math.random())));
+    train(xs, ys, vars);
+    plotDataAndPredictions(container, xs, ys, predict(xs, vars));
+}
+
+document.getElementById('train').addEventListener('click', () => {
+    trainAndPlot(document.getElementById('container'));
 });
