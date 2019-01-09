@@ -1,0 +1,30 @@
+{
+  "name": "machine-learning",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html --open",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reisman/machine-learning-js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/reisman/machine-learning-js/issues"
+  },
+  "homepage": "https://github.com/reisman/machine-learning-js#readme",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "babel-preset-env": "^1.7.0",
+    "parcel-bundler": "^1.11.0"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs": "^0.14.1",
+    "vega-embed": "^3.28.0"
+  }
+}
