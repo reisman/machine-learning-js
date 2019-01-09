@@ -1,6 +1,6 @@
 import * as tf from '@tensorflow/tfjs';
 import { generateData } from './data';
-import { plotDataAndPredictions } from './ui';
+import plotDataAndPredictions from './ui';
 
 const a = tf.variable(tf.scalar(Math.random()));
 const b = tf.variable(tf.scalar(Math.random()));
@@ -29,7 +29,7 @@ const train = (xs, ys, epochs, learningRate) => {
             return loss(pred, ys);
         });
 
-        console.log(`Epoch ${i}: a=${a.dataSync()[0]} || b=${b.dataSync()[0]} || c=${c.dataSync()[0]} || d=${d.dataSync()[0]}`);
+        console.log(`Epoch ${i+1}: a=${a.dataSync()[0]} || b=${b.dataSync()[0]} || c=${c.dataSync()[0]} || d=${d.dataSync()[0]}`);
     }
 }
 
