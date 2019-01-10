@@ -1,8 +1,8 @@
 import * as tf from '@tensorflow/tfjs';
 
-export function generateData(numPoints, coefficients, stdDev = 0.04) {
+export function generateData(numPoints, coefficients, rangeStart = -1, rangeEnd = 1, stdDev = 0.04) {
     const coeffs = coefficients.map(coeff => tf.scalar(coeff));
-    const xs = tf.randomUniform([numPoints], -1, 1);
+    const xs = tf.randomUniform([numPoints], rangeStart, rangeEnd);
     const ys = calculate(coeffs, xs).add(tf.randomNormal([numPoints], 0, stdDev));
     return {
         xs,

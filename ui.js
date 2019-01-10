@@ -13,7 +13,7 @@ const plotDataAndPredictions = async (container, xs, ys, preds) => {
     });
 
     const graphSpec = {
-        $schema: 'https://vega.github.io/schema/vega-lite/v2.json',
+        $schema: 'https://vega.github.io/schema/vega-lite/v3.0.0-rc10.json',
         width: 500,
         height: 500,
         data: {
