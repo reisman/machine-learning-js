@@ -4,6 +4,7 @@ export function generateData(numPoints, coefficients, rangeStart = -1, rangeEnd 
     const coeffs = coefficients.map(coeff => tf.scalar(coeff));
     const xs = tf.randomUniform([numPoints], rangeStart, rangeEnd);
     const ys = calculate(coeffs, xs).add(tf.randomNormal([numPoints], 0, stdDev));
+
     return {
         xs,
         ys

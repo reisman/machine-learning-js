@@ -11,6 +11,11 @@ const loss = (preds, ys) => {
 }
 
 const train = (xs, ys, vars, epochs = 100, learningRate = 0.5) => {
+    const logEpoch = num => {
+        const variablesLog = vars.map((v, i) => `V${i}=${v.dataSync()[0]}`).join(' || ');
+        console.log(`Epoch ${num}: ${variablesLog}`);
+    };
+
     const optimizer = tf.train.sgd(learningRate);
     for (let i = 0; i < epochs; i++) {
         optimizer.minimize(() => {
@@ -18,18 +23,33 @@ const train = (xs, ys, vars, epochs = 100, learningRate = 0.5) => {
             return loss(pred, ys);
         });
 
-        const variablesLog = vars.map((v, i) => `V${i}=${v.dataSync()[0]}`).join(' || ');
-        console.log(`Epoch ${i+1}: ${variablesLog}`);
+        logEpoch(i + 1);
     }
 }
 
 const trainAndPlot = container => {
-    const realCoeffs = [-0.8, 0.3, 0.5, 0.8];
-    const {xs, ys} = generateData(500, realCoeffs, -1, 1, 0.1);
+    const config = extractConfiguration();
+    const realCoeffs = config.coefficients;
+    const {xs, ys} = generateData(config.numberOfPoints, realCoeffs, -1, 1, config.standardDeviation);
     const vars = Array.from({length: realCoeffs.length}, () => tf.variable(tf.scalar(Math.random())));
-    train(xs, ys, vars);
-    plotDataAndPredictions(container, xs, ys, predict(xs, vars));
+    train(xs, ys, vars, config.epochs, config.learningRate);
+    plotDataAndPredictions(container, xs, ys, predict(xs, vars), 500, 800);
 }
+
+const extractConfiguration = () => {
+    const coefficients = document.getElementById('coefficients').value.split(' ').map(parseFloat);
+    const numberOfPoints = parseFloat(document.getElementById('number_points').value);
+    const standardDeviation = parseFloat(document.getElementById('standard_deviation').value);
+    const epochs = parseInt(document.getElementById('epochs').value);
+    const learningRate = parseFloat(document.getElementById('learning_rate').value);
+    return {
+        coefficients,
+        numberOfPoints,
+        standardDeviation, 
+        epochs,
+        learningRate
+    };
+};
 
 document.getElementById('train').addEventListener('click', () => {
     trainAndPlot(document.getElementById('container'));

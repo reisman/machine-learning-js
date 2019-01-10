@@ -1,6 +1,6 @@
 import renderChart from 'vega-embed';
 
-const plotDataAndPredictions = async (container, xs, ys, preds) => {
+const plotDataAndPredictions = async (container, xs, ys, preds, height = 500, width = 500) => {
     const xvals = await xs.data();
     const yvals = await ys.data();
     const predvals = await preds.data();
@@ -14,8 +14,8 @@ const plotDataAndPredictions = async (container, xs, ys, preds) => {
 
     const graphSpec = {
         $schema: 'https://vega.github.io/schema/vega-lite/v3.0.0-rc10.json',
-        width: 500,
-        height: 500,
+        width,
+        height,
         data: {
             values: values
         },

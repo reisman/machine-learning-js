@@ -2,10 +2,41 @@
 <html lang="en">
 <head>
     <title>Poly-Regression</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="./node_modules/materialize-css/dist/css/materialize.min.css" media="screen,projection"/>
 </head>
 <body>
+    <div class="row">
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="coefficients" type="text" class="validate" value="-0.8 0.3 0.5 0.8">
+                    <label for="coefficients">Coefficients</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s3">
+                    <input id="number_points" type="number" class="validate" value="500">
+                    <label for="number_points">Number of points</label>
+                </div>
+                <div class="input-field col s3">
+                    <input id="standard_deviation" type="number"  step="0.01" class="validate" value="0.1">
+                    <label for="standard_deviation">Standard deviation</label>
+                </div>
+                <div class="input-field col s3">
+                    <input id="epochs" type="number" class="validate" value="100">
+                    <label for="epochs">Epochs</label>
+                </div>
+                <div class="input-field col s3">
+                    <input id="learning_rate" type="number" step="0.01" class="validate" value="0.5">
+                    <label for="learning_rate">Learning rate</label>
+                </div>
+            </div>
+            <a id='train' class="waves-effect waves-light btn red">Train</a>
+        </form>
+    </div>
     <div id='container'></div>
-    <button id='train'>Train</button>
+    <script type="text/javascript" src="./node_modules/materialize-css/dist/js/materialize.min.js"></script>
     <script src="index.js"></script>
 </body>
 </html>

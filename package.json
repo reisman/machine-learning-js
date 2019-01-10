@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@tensorflow/tfjs": "^0.14.1",
+    "materialize-css": "^1.0.0-rc.2",
     "vega-embed": "^3.28.0"
   }
 }
