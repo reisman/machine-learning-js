@@ -10,7 +10,7 @@ const loss = (preds, ys) => {
     return preds.sub(ys).square().mean();
 }
 
-const train = (xs, ys, vars, epochs = 100, learningRate = 0.5) => {
+const train = (xs, ys, vars, epochs, learningRate) => {
     const logEpoch = num => {
         const variablesLog = vars.map((v, i) => `V${i}=${v.dataSync()[0]}`).join(' || ');
         console.log(`Epoch ${num}: ${variablesLog}`);
@@ -33,7 +33,7 @@ const trainAndPlot = container => {
     const {xs, ys} = generateData(config.numberOfPoints, realCoeffs, -1, 1, config.standardDeviation);
     const vars = Array.from({length: realCoeffs.length}, () => tf.variable(tf.scalar(Math.random())));
     train(xs, ys, vars, config.epochs, config.learningRate);
-    plotDataAndPredictions(container, xs, ys, predict(xs, vars), 500, 800);
+    plotDataAndPredictions(container, xs, ys, predict(xs, vars), 800, 1200);
 }
 
 const extractConfiguration = () => {
